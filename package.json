@@ -1,13 +1,13 @@
 {
   "name": "scrimba",
   "version": "1.0.0",
-  "description": "just doing stuff",
-  "main": "index.js",
+  "description": "OhDl is clean and hustle free yt-dlp web wrapper",
+  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "me",
-  "license": "ISC",
+  "author": "Ohshie",
+  "license": "MIT",
   "dependencies": {
     "tailwindcss": "^3.3.3"
   },

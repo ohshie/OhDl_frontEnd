@@ -4,13 +4,14 @@ import createHtml from "./cardCreator.js";
 const inputEl = document.getElementById("input-el");
 const inputButton = document.getElementById("input-btn");
 const outputDiv = document.getElementById("output-div");
+const cardEl = document.getElementById("card-div");
+const placeholderImg = document.getElementById("placeholder-img");
 
-const baseFormats = [480, 720, 1080];
-let foundBaseFormats = [];
 let cardHtml;
 
 inputButton.addEventListener("click", async function click() {
   if (inputEl.value.length != 0) {
+    cardEl.style.visibility = "visible";
     await ButtonClick();
     await RenderCard();
   }
@@ -31,25 +32,26 @@ async function ButtonClick() {
 
     const obj = await response.json();
 
-    ProcessVideoInfo(obj)
+    ProcessVideoInfo(obj);
   } catch (error) {
     console.log("Whoops, somethings is broken.");
   }
 }
 
-function ProcessVideoInfo(obj){
+function ProcessVideoInfo(obj) {
   videoInfo.VideoName = obj.videoName;
-    videoInfo.Hosting = obj.hosting;
-    videoInfo.VideoDesc = obj.videoDesc;
-    videoInfo.Thumbnail = obj.thumbnail;
-    videoInfo.Formats = obj.formats;
+  videoInfo.Hosting = obj.hosting;
+  videoInfo.VideoDesc = obj.videoDesc;
+  videoInfo.Thumbnail = obj.thumbnail;
+  videoInfo.Formats = obj.formats;
 
-    createHtml(videoInfo);
+  cardHtml = createHtml(videoInfo);
 }
 
 async function RenderCard() {
   try {
+    outputDiv.innerHTML = cardHtml;
   } catch (error) {
-    console.error("Error fetching template:", error);
+    console.error("Error processing template:", error);
   }
 }
