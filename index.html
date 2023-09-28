@@ -10,6 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link href="styles/style.css" rel="stylesheet" />
     <title>OhDl</title>
+    <link rel="icon" href="./favicon.ico" />
     <script type="text/javascript" src="./src/purify.js"></script>
   </head>
   <body class="font-mono text-textBlack">
@@ -53,15 +54,11 @@
       <div id="output-div" class="flex justify-center p-2">
         <div
           id="card-div"
-          style="
-            transition: 500ms;
-            transition-timing-function: ease;
-            visibility: hidden;
-          "
-          class="relative flex h-64 w-full lg:w-1/2 flex-row overflow-hidden justify-between border-4 border-black gap-4 shadow-[5px_5px_0px_0px_rgba(0,0,0)]"
+          style="transition: 500ms; transition-timing-function: ease"
+          class="relative flex h-64 w-full lg:w-1/2 flex-row overflow-hidden invisible opacity-0 transform translate-y-4 justify-between border-4 border-black gap-4 shadow-[5px_5px_0px_0px_rgba(0,0,0)]"
         >
           <!-- Placeholder image -->
-          <div class="absolute flex items-center justify-center w-full h-full">
+          <div id="placeholder-div" class="absolute hidden items-center justify-center w-full h-full">
             <div role="status" class="flex flex-col items-center z-30">
               <svg
                 aria-hidden="true"
@@ -91,13 +88,14 @@
             />
           </div>
           <!-- usefull for design/debug -->
-          <img
-            class="object-cover object-left w-1/2"
-            loading="lazy"
-            decoding="async"
-            src=""
-          />
-          <div class="flex flex-col leading-normal gap-2 p-4 w-1/2">
+          <div id="cardContent-div" class="flex flex-row h-full w-full bg-green-700">
+            <img
+              class="object-cover object-left w-1/2"
+              loading="lazy"
+              decoding="async"
+              src=""
+            />
+            <div class="flex flex-col leading-normal gap-2 p-4 w-1/2">
             <p class="text-lg font-bold overflow-visible text-ellipsis h-1/4">
               VideoName
             </p>
@@ -139,6 +137,7 @@
               </button>
             </div>
           </div>
+           </div>
         </div>
       </div>
     </main>

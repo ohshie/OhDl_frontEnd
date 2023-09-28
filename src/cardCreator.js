@@ -9,8 +9,7 @@ function createHtml(videoInfo) {
   const imageImg = CreateImg(videoInfo.Thumbnail);
 
   let card = `<div
-  id="card-div"
-  class="flex h-64 w-full lg:w-1/2 flex-row overflow-hidden justify-between border-4 bg-green-600 border-black gap-4 shadow-[5px_5px_0px_0px_rgba(0,0,0)]"
+  class="flex flex-row h-full w-full"
 >
         ${imageImg}
         <div class="flex flex-col leading-normal gap-2 p-4 w-1/2">
@@ -27,7 +26,7 @@ function createHtml(videoInfo) {
 
 function CreateImg(thumbnail) {
   return `<img
-    class="object-cover object-left w-1/2"
+    class="object-cover object-center w-1/2"
     loading="lazy"
     decoding="async"
     src="${thumbnail}"
@@ -62,10 +61,12 @@ function CreateButtons(Formats) {
 
   for (let i = Formats.length - 1; i >= 0; i--) {
     if (Formats[i].webmOnly) buttonBgColor = "bg-red-500";
-    else if (Formats[i].oneFile) buttonBgColor = "bg-green-400";
+    else if (Formats[i].oneFile) buttonBgColor = "bg-green-300";
     else buttonBgColor = "bg-yellow-400";
 
-    let buttonHtml = `<button data-videoCode="${Formats[i].formatCode}"
+    if (Formats[i].frameRate == null) Formats[i].frameRate = "";
+
+    let buttonHtml = `<button id="format-button" data-videoCode="${Formats[i].formatCode}"
           style="transition: 300ms; transition-timing-function: ease"
           class="p-4 text-center flex-grow ${buttonBgColor} border-2 border-black hover:shadow-[4px_4px_0px_0px_#f6e05e,8px_8px_0px_0px_#f6ad55]"
         >
@@ -81,17 +82,18 @@ function CreateButtons(Formats) {
 
 function CreateExtraButtonsDiv() {
   return `<div class="flex flex-row gap-2 justify-evenly px-6 font-semibold">
-    <button data-videoCode="audioOnly"
+    <button id="audioOnly-button" data-videoCode="audioOnly"
     style="transition: 300ms; transition-timing-function: ease"
     class="p-2 text-center flex-grow bg-yellow-500 border-2 border-black hover:shadow-[4px_4px_0px_0px_#f6e05e,8px_8px_0px_0px_#f6ad55]"
   >
     Get audio only
   </button>
   <button
+    id="other-button"
     style="transition: 300ms; transition-timing-function: ease"
     class="p-2 text-center flex-grow bg-blue-500 border-2 border-black hover:shadow-[4px_4px_0px_0px_#f6e05e,8px_8px_0px_0px_#f6ad55]"
   >
-    See other <br />options
+    See other <br>options
   </button>
     </div>`;
 }
