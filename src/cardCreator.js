@@ -66,7 +66,7 @@ function CreateButtons(Formats) {
 
     if (Formats[i].frameRate == null) Formats[i].frameRate = "";
 
-    let buttonHtml = `<button id="format-button" data-videoCode="${Formats[i].formatCode}"
+    let buttonHtml = `<button name="format-button" data-videoCode="${Formats[i].formatCode}"
           style="transition: 300ms; transition-timing-function: ease"
           class="p-4 text-center flex-grow ${buttonBgColor} border-2 border-black hover:shadow-[4px_4px_0px_0px_#f6e05e,8px_8px_0px_0px_#f6ad55]"
         >

@@ -1,5 +1,7 @@
 import videoInfo from "./VideoInfo.js";
 import createHtml from "./cardCreator.js";
+import ProcessAudioOnlyRequest from "./ProcessAudioRequest.js";
+import ProcessVideoRequest from "./ProcessVideoRequest.js";
 
 const inputEl = document.getElementById("input-el");
 const inputButton = document.getElementById("input-btn");
@@ -8,20 +10,25 @@ const cardEl = document.getElementById("card-div");
 
 const placeholderDiv = document.getElementById("placeholder-div");
 
+let responseBlobAndFileName = {
+  blob: Blob,
+  fileName: "",
+};
+
 let formatButton;
 let audioOnlyButton;
 let otherButton;
 
 const placeholderImgs = [
-  "../assets/images/caravan.webp",
-  "../assets/images/cowboy.webp",
-  "../assets/images/dino.webp",
-  "../assets/images/knight.webp",
-  "../assets/images/priest.webp",
-  "../assets/images/princess.webp",
-  "../assets/images/ship.webp",
-  "../assets/images/smuggler.webp",
-  "../assets/images/sunset.webp",
+  "./assets/images/caravan.webp",
+  "./assets/images/cowboy.webp",
+  "./assets/images/dino.webp",
+  "./assets/images/knight.webp",
+  "./assets/images/priest.webp",
+  "./assets/images/princess.webp",
+  "./assets/images/ship.webp",
+  "./assets/images/smuggler.webp",
+  "./assets/images/sunset.webp",
 ];
 
 let cardHtml;
@@ -33,54 +40,50 @@ inputButton.addEventListener("click", async function click() {
     await ProcessVideoUrl();
     await RenderCard();
 
-    formatButton = document.getElementById("format-button");
+    formatButton = document.getElementsByName("format-button");
     audioOnlyButton = document.getElementById("audioOnly-button");
     otherButton = document.getElementById("other-button");
 
     audioOnlyButton.addEventListener("click", async function click() {
-      await ProcessAudioOnlyRequest();
+      const encodedUrl = encodeURIComponent(inputEl.value);
+      responseBlobAndFileName = await ProcessAudioOnlyRequest(encodedUrl);
+      ServeFile(responseBlobAndFileName);
     });
+
+    formatButton.forEach((button) =>
+      button.addEventListener("click", async function click() {
+        const encodedUrl = encodeURIComponent(inputEl.value);
+        const videoCode = button.dataset.videocode;
+        responseBlobAndFileName = await ProcessVideoRequest(
+          encodedUrl,
+          videoCode,
+        );
+        ServeFile(responseBlobAndFileName);
+      }),
+    );
   }
 });
 
-async function ProcessAudioOnlyRequest() {
-  const encodedUrl = encodeURIComponent(inputEl.value);
-  const fullUrl = "http://localhost:5013/YtDl?videoUrl=" + encodedUrl;
+function ServeFile(responseBlobAndFileName) {
+  const url = URL.createObjectURL(responseBlobAndFileName.blob);
+  const a = document.createElement("a");
 
-  try {
-    const response = await fetch(fullUrl, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
+  a.href = url;
+  a.download = responseBlobAndFileName.fileName;
 
-    const contentDisposition = response.headers.get("Content-Disposition");
-    const fileName = ExtractFileName(contentDisposition);
+  document.body.appendChild(a);
 
-    const blob = await response.blob();
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
+  a.click();
 
-    a.href = url;
-    a.download = fileName;
+  document.body.removeChild(a);
 
-    document.body.appendChild(a);
-
-    a.click();
-
-    document.body.removeChild(a);
-
-    URL.revokeObjectURL(url);
-  } catch (error) {
-    console.log("Whoops, somethings is broken. " + error);
-  }
+  URL.revokeObjectURL(url);
 }
 
 async function ProcessVideoUrl() {
   const encodedUrl = encodeURIComponent(inputEl.value);
-  const fullUrl = "http://localhost:5013/YtDl?videoUrl=" + encodedUrl;
+  const fullUrl =
+    "http://localhost:5013/YtDl/GetVideoInfo?videoUrl=" + encodedUrl;
 
   try {
     const response = await fetch(fullUrl, {
@@ -97,14 +100,6 @@ async function ProcessVideoUrl() {
   } catch (error) {
     console.log("Whoops, somethings is broken. " + error);
   }
-}
-
-function ExtractFileName(content) {
-  let fileName;
-  const parts = content.split(";");
-  fileName = parts[1].split("=")[1];
-
-  return fileName;
 }
 
 function ProcessVideoInfo(obj) {
