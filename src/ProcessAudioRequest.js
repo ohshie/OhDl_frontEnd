@@ -1,5 +1,6 @@
 async function ProcessAudioOnlyRequest(url) {
-  const fullUrl = "http://localhost:5013/YtDl/RequestAudioOnly?videoUrl=" + url;
+  const fullUrl = "http://localhost:5013/YtDl/RequestAudioOnly";
+  const payload = JSON.stringify({"videoUrl": url});
 
   try {
     const response = await fetch(fullUrl, {
@@ -7,7 +8,9 @@ async function ProcessAudioOnlyRequest(url) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "X-User-ID": getCookie("userID"),
       },
+      body: payload
     });
 
     const contentDisposition = response.headers.get("Content-Disposition");
@@ -17,14 +20,6 @@ async function ProcessAudioOnlyRequest(url) {
   } catch (error) {
     console.log("Whoops, somethings is broken. " + error);
   }
-}
-
-function ExtractFileName(content) {
-  let fileName;
-  const parts = content.split(";");
-  fileName = parts[1].split("=")[1];
-
-  return fileName;
 }
 
 export default ProcessAudioOnlyRequest;

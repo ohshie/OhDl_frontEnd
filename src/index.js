@@ -9,6 +9,9 @@ const cardContentDiv = document.getElementById("cardContent-div");
 const cardEl = document.getElementById("card-div");
 
 const placeholderDiv = document.getElementById("placeholder-div");
+const uniqueId = crypto.randomUUID();
+
+document.cookie = `userID=${uniqueId}; max-age=604800; SameSite=strict`;
 
 let responseBlobAndFileName = {
   blob: Blob,
@@ -83,15 +86,18 @@ function ServeFile(responseBlobAndFileName) {
 async function ProcessVideoUrl() {
   const encodedUrl = encodeURIComponent(inputEl.value);
   const fullUrl =
-    "http://localhost:5013/YtDl/GetVideoInfo?videoUrl=" + encodedUrl;
+    "http://localhost:5013/YtDl/RequestVideoInfo";
 
   try {
     const response = await fetch(fullUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "X-User-ID": getCookie("userID"),
       },
+      body: JSON.stringify({
+        "videoUrl": encodedUrl})
     });
 
     const obj = await response.json();
