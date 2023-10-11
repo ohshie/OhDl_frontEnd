@@ -4,13 +4,19 @@ var url = require('url')
 
 var vars = (process.config && process.config.variables) || {}
 var prebuildsOnly = !!process.env.PREBUILDS_ONLY
-var abi = process.versions.modules // TODO: support old node where this is undef
+var versions = process.versions
+var abi = versions.modules
+if (versions.deno || process.isBun) {
+  // both Deno and Bun made the very poor decision to shoot themselves in the foot and lie about support for ABI
+  // (which they do not have)
+  abi = 'unsupported'
+}
 var runtime = isElectron() ? 'electron' : 'node'
 var arch = process.arch
 var platform = process.platform
 var libc = process.env.LIBC || (isAlpine(platform) ? 'musl' : 'glibc')
 var armv = process.env.ARM_VERSION || (arch === 'arm64' ? '8' : vars.arm_version) || ''
-var uv = (process.versions.uv || '').split('.')[0]
+var uv = (versions.uv || '').split('.')[0]
 
 module.exports = load
 

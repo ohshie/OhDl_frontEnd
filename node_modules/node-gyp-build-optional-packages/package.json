@@ -1,6 +1,6 @@
 {
   "name": "node-gyp-build-optional-packages",
-  "version": "5.0.6",
+  "version": "5.0.7",
   "description": "Build tool and bindings loader for node-gyp that supports prebuilds",
   "main": "index.js",
   "devDependencies": {
