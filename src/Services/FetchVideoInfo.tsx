@@ -1,9 +1,9 @@
-import { CardModel } from "../../../../Contexts/CardContext";
-import { GetCookie } from "../../../../Services/Helpers";
+import { CardModel } from "../Contexts/CardContext";
+import { GetCookie } from "./Helpers";
 
-async function FetchVideoInfo(inputEl: string): Promise<any> {
+async function FetchVideoInfo(inputEl: string): Promise<CardModel | undefined> {
   const encodedUrl = encodeURIComponent(inputEl);
-  const fullUrl = "https://localhost:7103/YtDl/RequestVideoInfo";
+  const fullUrl = `${import.meta.env.VITE_BACKEND_URL}/YtDl/RequestVideoInfo`;
 
   try {
     const response = await fetch(fullUrl, {
@@ -18,6 +18,9 @@ async function FetchVideoInfo(inputEl: string): Promise<any> {
         videoUrl: encodedUrl,
       }),
     });
+    if (!response.ok) {
+      return;
+    }
 
     const obj: CardModel = await response.json();
 

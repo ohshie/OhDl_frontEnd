@@ -1,6 +1,6 @@
 import { CardModel, UseCardContext } from "../../../../Contexts/CardContext";
 import { useFormContext } from "../../../../Contexts/FormContext";
-import FetchVideoInfo from "./FetchVideoInfo";
+import FetchVideoInfo from "../../../../Services/FetchVideoInfo";
 
 const SubmitButton = () => {
   const { providedUrl } = useFormContext();
@@ -11,9 +11,16 @@ const SubmitButton = () => {
   const onClick = async () => {
     if (!isRequested) setIsRequested(true);
     setIsLoading(true);
-    const obj: CardModel = await FetchVideoInfo(providedUrl);
-    obj.videoUrl = providedUrl;
-    setCards((prevCards) => [...prevCards, obj]);
+
+    const obj: CardModel | undefined = await FetchVideoInfo(providedUrl);
+
+    if (obj) {
+      obj.videoUrl = providedUrl;
+      setCards((prevCards) => [...prevCards, obj]);
+    } else {
+      setIsRequested(false);
+    }
+
     setIsLoading(false);
   };
 

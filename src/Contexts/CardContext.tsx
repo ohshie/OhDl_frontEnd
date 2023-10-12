@@ -50,7 +50,12 @@ export default function CardContextProvider({ children }: CardContextProvider) {
   const fetchMedia = async (url: string, type: string) => {
     setIsLoading(true);
     const media = await FetchMedia(url, type);
-    PrepareDownload(media?.blob, media?.fileName);
+    if (!media) {
+      setIsLoading(false);
+      return;
+    }
+
+    PrepareDownload(media.blob, media.fileName);
     setIsLoading(false);
   };
 
@@ -74,7 +79,7 @@ export default function CardContextProvider({ children }: CardContextProvider) {
 export function UseCardContext() {
   const context = useContext(CardContext);
   if (!context) {
-    throw new Error("usecardContext must be used within CardContextProvider");
+    throw new Error("useCardContext must be used within CardContextProvider");
   }
 
   return context;
