@@ -1,28 +1,22 @@
 {
-  "name": "leaning",
+  "name": "ohdl_frontend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Frontend version of OhDl yt-dlp wrapper",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel src/index.html"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@babel/cli": "^7.23.0",
-    "@babel/core": "^7.23.0",
-    "@babel/preset-env": "^7.23.2",
-    "@types/node": "^20.8.4",
-    "@types/react-dom": "^18.2.12",
-    "postcss": "^8.4.31",
-    "process": "^0.11.10",
-    "tailwindcss": "^3.3.3",
-    "typescript": "^5.2.2"
-  },
+  "repository": "https://github.com/ohshie/OhDl_frontEnd.git",
+  "author": "stas <@ohshie>",
+  "license": "MIT",
   "dependencies": {
+    "@types/react": "^18.2.28",
     "parcel": "^2.10.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "@parcel/core": "^2.10.0",
+    "@types/react-dom": "^18.2.13",
+    "process": "^0.11.10",
+    "tailwindcss": "^3.3.3"
   }
 }
