@@ -1,4 +1,4 @@
-export function getCookie(name: string): string {
+export function GetCookie(name: string): string {
   const value = `; ${document.cookie}`;
   const parts: string[] = value.split(`; ${name}=`);
 
@@ -6,19 +6,21 @@ export function getCookie(name: string): string {
 }
 
 export function ExtractFileName(content: string | null): string {
-  let fileName;
   const parts = content!.split(";");
-  fileName = parts[1].split("=")[1];
+  const fileName = parts[1].split("=")[1];
 
   return fileName;
 }
 
-export function Preparedownload(blob: Blob, fileName: string) {
-  const url = URL.createObjectURL(blob);
+export function PrepareDownload(
+  blob: Blob | undefined,
+  fileName: string | undefined
+) {
+  const url = URL.createObjectURL(blob!);
   const a = document.createElement("a");
 
   a.href = url;
-  a.download = fileName;
+  a.download = fileName!;
 
   document.body.appendChild(a);
 

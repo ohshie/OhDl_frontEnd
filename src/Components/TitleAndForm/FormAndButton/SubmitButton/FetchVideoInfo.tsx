@@ -1,5 +1,5 @@
 import { CardModel } from "../../../../Contexts/CardContext";
-import { getCookie } from "../../../../Services/Helpers";
+import { GetCookie } from "../../../../Services/Helpers";
 
 async function FetchVideoInfo(inputEl: string): Promise<any> {
   const encodedUrl = encodeURIComponent(inputEl);
@@ -12,7 +12,7 @@ async function FetchVideoInfo(inputEl: string): Promise<any> {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "X-User-ID": getCookie("userID"),
+        "X-User-ID": GetCookie("userID"),
       },
       body: JSON.stringify({
         videoUrl: encodedUrl,

@@ -1,8 +1,8 @@
-import { CardModel, useCardContext } from "../../../../Contexts/CardContext";
+import { CardModel, UseCardContext } from "../../../../Contexts/CardContext";
 
 function ExtraButtons() {
-  const { cards } = useCardContext();
-  const { fetchMedia } = useCardContext();
+  const { cards } = UseCardContext();
+  const { fetchMedia } = UseCardContext();
   const card: CardModel = cards[cards.length - 1];
 
   async function onClick() {

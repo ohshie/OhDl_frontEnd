@@ -1,8 +1,4 @@
-import {
-  useCardContext,
-  VideoFormat,
-  CardModel,
-} from "../../../../Contexts/CardContext";
+import { UseCardContext, VideoFormat } from "../../../../Contexts/CardContext";
 import FormatButton from "../FormatButtons";
 
 function prepareFormats(videoFormats: VideoFormat[]) {
@@ -29,7 +25,7 @@ function createButtons(topFormats: VideoFormat[], videoUrl: string) {
 }
 
 function MainButtonsDiv() {
-  const { cards } = useCardContext();
+  const { cards } = UseCardContext();
   const card = cards[cards.length - 1];
   if (!card) return <>"shit is broken af"</>;
 

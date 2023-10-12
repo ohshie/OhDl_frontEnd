@@ -2,7 +2,7 @@ import VideoThumbnail from "./VideoThumbnail";
 import VideoTitle from "./VideoTitle";
 import CardButtons from "./CardButtons";
 import Placeholder from "./Placeholder";
-import { useCardContext } from "../../Contexts/CardContext";
+import { UseCardContext } from "../../Contexts/CardContext";
 import { ReactElement } from "react";
 
 function manageLoading(isLoading: boolean) {
@@ -26,8 +26,8 @@ function manageLoading(isLoading: boolean) {
 }
 
 function Card() {
-  const { isLoading } = useCardContext();
-  const { isRequested } = useCardContext();
+  const { isLoading } = UseCardContext();
+  const { isRequested } = UseCardContext();
 
   if (!isRequested) return;
 

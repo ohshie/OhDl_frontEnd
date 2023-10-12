@@ -1,4 +1,4 @@
-import React, {
+import {
   Dispatch,
   ReactNode,
   SetStateAction,
@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import FetchMedia from "../Services/FetchMedia";
-import { Preparedownload } from "../Services/Helpers";
+import { PrepareDownload } from "../Services/Helpers";
 
 export interface VideoFormat {
   formatCode: string;
@@ -50,7 +50,7 @@ export default function CardContextProvider({ children }: CardContextProvider) {
   const fetchMedia = async (url: string, type: string) => {
     setIsLoading(true);
     const media = await FetchMedia(url, type);
-    Preparedownload(media?.blob!, media?.fileName!);
+    PrepareDownload(media?.blob, media?.fileName);
     setIsLoading(false);
   };
 
@@ -71,7 +71,7 @@ export default function CardContextProvider({ children }: CardContextProvider) {
   );
 }
 
-export function useCardContext() {
+export function UseCardContext() {
   const context = useContext(CardContext);
   if (!context) {
     throw new Error("usecardContext must be used within CardContextProvider");

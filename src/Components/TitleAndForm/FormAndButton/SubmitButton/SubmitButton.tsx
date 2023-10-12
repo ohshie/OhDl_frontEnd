@@ -1,12 +1,12 @@
-import { CardModel, useCardContext } from "../../../../Contexts/CardContext";
+import { CardModel, UseCardContext } from "../../../../Contexts/CardContext";
 import { useFormContext } from "../../../../Contexts/FormContext";
 import FetchVideoInfo from "./FetchVideoInfo";
 
 const SubmitButton = () => {
-  const { providedUrl, setProvidedUrl } = useFormContext();
-  const { isLoading, setIsLoading } = useCardContext();
-  const { isRequested, setIsRequested } = useCardContext();
-  const { cards, setCards } = useCardContext();
+  const { providedUrl } = useFormContext();
+  const { setIsLoading } = UseCardContext();
+  const { isRequested, setIsRequested } = UseCardContext();
+  const { setCards } = UseCardContext();
 
   const onClick = async () => {
     if (!isRequested) setIsRequested(true);

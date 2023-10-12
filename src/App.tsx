@@ -1,15 +1,15 @@
 import { useEffect } from "react";
+import "./index.css";
 
+import CardContext from "./Contexts/CardContext";
 import TitleAndForm from "./Components/TitleAndForm";
 import Card from "./Components/Card";
-import CardContext from "./Contexts/CardContext";
 
-import { useCardContext } from "./Contexts/CardContext";
-import { getCookie } from "./Services/Helpers";
+import { GetCookie } from "./Services/Helpers";
 
 function App() {
   useEffect(() => {
-    if (!getCookie("userID")) {
+    if (!GetCookie("userID")) {
       const uniqueId = crypto.randomUUID();
       document.cookie = `userID=${uniqueId}; max-age=604800; SameSite=Strict; path=/`;
     }

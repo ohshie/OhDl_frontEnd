@@ -1,7 +1,7 @@
-import { useCardContext } from "../../../Contexts/CardContext";
+import { UseCardContext } from "../../../Contexts/CardContext";
 
 function VideoTitle() {
-  const { cards } = useCardContext();
+  const { cards } = UseCardContext();
   const card = cards[cards.length - 1];
   if (!card) return <>"shit if broken"</>;
 

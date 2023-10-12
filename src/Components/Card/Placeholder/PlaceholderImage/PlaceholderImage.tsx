@@ -1,5 +1,4 @@
 import { ReactElement } from "react";
-import Card from "../../Card";
 import caravan from "./assets/caravan.webp";
 import cowboy from "./assets/cowboy.webp";
 import dino from "./assets/dino.webp";
@@ -24,7 +23,7 @@ const placeholderImgs = [
 
 function PlaceholderImage(): ReactElement {
   function placeholderPicker(): string {
-    let randomizer = Math.floor(Math.random() * placeholderImgs.length);
+    const randomizer = Math.floor(Math.random() * placeholderImgs.length);
     return placeholderImgs[randomizer];
   }
 

@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
-import { useCardContext } from "../../../Contexts/CardContext";
+import { UseCardContext } from "../../../Contexts/CardContext";
 
 function VideoThumbnail(): ReactElement {
-  const { cards } = useCardContext();
+  const { cards } = UseCardContext();
   const card = cards[cards.length - 1];
   if (!card) return <>"shit if broken"</>;
 

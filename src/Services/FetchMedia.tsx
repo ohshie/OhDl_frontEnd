@@ -1,4 +1,4 @@
-import { getCookie, ExtractFileName } from "./Helpers";
+import { GetCookie, ExtractFileName } from "./Helpers";
 
 async function FetchMedia(url: string, videoFormat: string) {
   let fullUrl: string, payload: string;
@@ -10,7 +10,7 @@ async function FetchMedia(url: string, videoFormat: string) {
     payload = JSON.stringify({ VideoUrl: url, FormatCode: videoFormat });
   }
 
-  const cookie: string = getCookie("userID");
+  const cookie: string = GetCookie("userID");
 
   try {
     const response = await fetch(fullUrl, {
