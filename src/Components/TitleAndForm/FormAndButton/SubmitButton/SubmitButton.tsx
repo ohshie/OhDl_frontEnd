@@ -9,7 +9,15 @@ const SubmitButton = () => {
   const { setCards } = UseCardContext();
 
   const onClick = async () => {
-    if (!isRequested) setIsRequested(true);
+    if (providedUrl === "") return;
+
+    try {
+      Boolean(new URL(providedUrl));
+    } catch (e) {
+      return;
+    }
+
+    if (providedUrl) if (!isRequested) setIsRequested(true);
     setIsLoading(true);
 
     const obj: CardModel | undefined = await FetchVideoInfo(providedUrl);
