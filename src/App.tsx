@@ -3,9 +3,9 @@ import "./index.css";
 
 import CardContext from "./Contexts/CardContext";
 import TitleAndForm from "./Components/TitleAndForm";
-import Card from "./Components/Card";
 
 import { GetCookie } from "./Services/Helpers";
+import CardStack from "./Components/CardsStack/CardStack";
 
 function App() {
   useEffect(() => {
@@ -19,7 +19,7 @@ function App() {
     <>
       <CardContext>
         <TitleAndForm />
-        <Card />
+        <CardStack />
       </CardContext>
     </>
   );

@@ -24,13 +24,9 @@ function createButtons(topFormats: VideoFormat[], videoUrl: string) {
   return buttons;
 }
 
-function MainButtonsDiv() {
-  const { cards } = UseCardContext();
-  const card = cards[cards.length - 1];
-  if (!card) return <>"shit is broken af"</>;
-
-  const topFormats = prepareFormats(card.formats);
-  const buttons = createButtons(topFormats, card.videoUrl);
+function MainButtonsDiv({ formats, videoUrl }) {
+  const topFormats = prepareFormats(formats);
+  const buttons = createButtons(topFormats, videoUrl);
 
   return (
     <div className="flex flex-row gap-2 justify-evenly font-semibold">

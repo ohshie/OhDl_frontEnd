@@ -1,7 +1,19 @@
 import { CardModel } from "../Contexts/CardContext";
 import { GetCookie } from "./Helpers";
 
-async function FetchVideoInfo(inputEl: string): Promise<CardModel | undefined> {
+function createFailedObj() {
+  const obj: CardModel = {
+    isLoading: true,
+    videoUrl: "",
+    videoName: "",
+    videoDesc: "",
+    thumbnail: "failed",
+    formats: [],
+  };
+  return obj;
+}
+
+async function FetchVideoInfo(inputEl: string): Promise<CardModel> {
   const encodedUrl = encodeURIComponent(inputEl);
   const fullUrl = `${import.meta.env.VITE_BACKEND_URL}/YtDl/RequestVideoInfo`;
 
@@ -19,14 +31,18 @@ async function FetchVideoInfo(inputEl: string): Promise<CardModel | undefined> {
       }),
     });
     if (!response.ok) {
-      return;
+      return createFailedObj();
     }
 
     const obj: CardModel = await response.json();
 
-    return obj;
+    if (obj) {
+      obj.videoUrl = inputEl;
+      return obj;
+    }
   } catch (error) {
     console.log("Whoops, somethings is broken. " + error);
+    return createFailedObj();
   }
 }
 

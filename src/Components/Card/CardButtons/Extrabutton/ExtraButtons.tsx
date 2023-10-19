@@ -1,12 +1,8 @@
-import { CardModel, UseCardContext } from "../../../../Contexts/CardContext";
+import ServeMedia from "../../../../Services/ServeMedia";
 
-function ExtraButtons() {
-  const { cards } = UseCardContext();
-  const { fetchMedia } = UseCardContext();
-  const card: CardModel = cards[cards.length - 1];
-
+function ExtraButtons({ videoUrl }: { videoUrl: string }) {
   async function onClick() {
-    await fetchMedia(card.videoUrl, "audioOnly");
+    await ServeMedia(videoUrl, "audioOnly");
   }
 
   return (

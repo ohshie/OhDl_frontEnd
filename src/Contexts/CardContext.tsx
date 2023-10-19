@@ -1,13 +1,12 @@
 import {
   Dispatch,
+  ReactElement,
   ReactNode,
   SetStateAction,
   createContext,
   useContext,
   useState,
 } from "react";
-import FetchMedia from "../Services/FetchMedia";
-import { PrepareDownload } from "../Services/Helpers";
 
 export interface VideoFormat {
   formatCode: string;
@@ -21,6 +20,7 @@ export interface VideoFormat {
 }
 
 export interface CardModel {
+  isLoading: boolean;
   videoUrl: string;
   videoName: string;
   videoDesc: string;
@@ -31,11 +31,9 @@ export interface CardModel {
 type CardContext = {
   cards: CardModel[];
   setCards: Dispatch<SetStateAction<CardModel[]>>;
-  isLoading: boolean;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
-  isRequested: boolean;
-  setIsRequested: Dispatch<SetStateAction<boolean>>;
-  fetchMedia: (url: string, type: string) => Promise<void>;
+  addToCardHistory: (card: ReactElement) => void;
+  cardHistory: ReactElement[];
+  setCardHistory: Dispatch<SetStateAction<ReactElement[]>>;
 };
 
 type CardContextProvider = { children: ReactNode };
@@ -44,31 +42,20 @@ export const CardContext = createContext<CardContext | null>(null);
 
 export default function CardContextProvider({ children }: CardContextProvider) {
   const [cards, setCards] = useState<CardModel[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isRequested, setIsRequested] = useState(false);
+  const [cardHistory, setCardHistory] = useState<ReactElement[]>([]);
 
-  const fetchMedia = async (url: string, type: string) => {
-    setIsLoading(true);
-    const media = await FetchMedia(url, type);
-    if (!media) {
-      setIsLoading(false);
-      return;
-    }
-
-    PrepareDownload(media.blob, media.fileName);
-    setIsLoading(false);
-  };
+  function addToCardHistory(card: ReactElement) {
+    setCardHistory((prev) => [card, ...prev]);
+  }
 
   return (
     <CardContext.Provider
       value={{
         cards,
         setCards,
-        isLoading,
-        setIsLoading,
-        isRequested,
-        setIsRequested,
-        fetchMedia,
+        cardHistory,
+        setCardHistory,
+        addToCardHistory,
       }}
     >
       {children}

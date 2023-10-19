@@ -1,6 +1,7 @@
 import { GetCookie, ExtractFileName } from "./Helpers";
 
 const beUrl: string = import.meta.env.VITE_BACKEND_URL;
+
 async function FetchMedia(url: string, videoFormat: string) {
   let fullUrl: string, payload: string;
   if (videoFormat === "audioOnly") {

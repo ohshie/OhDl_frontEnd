@@ -2,34 +2,54 @@ import { CardModel, UseCardContext } from "../../../../Contexts/CardContext";
 import { useFormContext } from "../../../../Contexts/FormContext";
 import FetchVideoInfo from "../../../../Services/FetchVideoInfo";
 
+function safetyCheck(providedUrl: string, cards: CardModel[]): boolean {
+  if (providedUrl === "") return false;
+
+  try {
+    Boolean(new URL(providedUrl));
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+
+  const checkForSameCard = cards.find((card) => card.videoUrl === providedUrl);
+  if (checkForSameCard) return false;
+
+  return true;
+}
+
 const SubmitButton = () => {
   const { providedUrl } = useFormContext();
-  const { setIsLoading } = UseCardContext();
-  const { isRequested, setIsRequested } = UseCardContext();
-  const { setCards } = UseCardContext();
+  const { cards, setCards } = UseCardContext();
 
   const onClick = async () => {
-    if (providedUrl === "") return;
+    if (!safetyCheck(providedUrl, cards)) return;
 
-    try {
-      Boolean(new URL(providedUrl));
-    } catch (e) {
-      return;
-    }
+    let newCard: CardModel = {
+      isLoading: true,
+      videoUrl: providedUrl,
+      videoName: "",
+      videoDesc: "",
+      thumbnail: "",
+      formats: [],
+    };
 
-    if (providedUrl) if (!isRequested) setIsRequested(true);
-    setIsLoading(true);
+    setCards((prevCards) => [...prevCards, newCard]);
 
-    const obj: CardModel | undefined = await FetchVideoInfo(providedUrl);
+    newCard = await FetchVideoInfo(providedUrl);
+    newCard.isLoading = false;
 
-    if (obj) {
-      obj.videoUrl = providedUrl;
-      setCards((prevCards) => [...prevCards, obj]);
+    if (newCard.thumbnail === "failed") {
+      setCards((prevCards) =>
+        prevCards.filter((card) => card.videoUrl !== providedUrl)
+      );
     } else {
-      setIsRequested(false);
+      setCards((prevCards) => {
+        return prevCards.map((card) =>
+          card.videoUrl === providedUrl ? newCard : card
+        );
+      });
     }
-
-    setIsLoading(false);
   };
 
   return (
