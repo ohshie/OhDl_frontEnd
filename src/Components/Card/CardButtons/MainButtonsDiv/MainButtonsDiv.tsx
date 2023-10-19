@@ -1,4 +1,4 @@
-import { UseCardContext, VideoFormat } from "../../../../Contexts/CardContext";
+import { VideoFormat } from "../../../../Contexts/CardContext";
 import FormatButton from "../FormatButtons";
 
 function prepareFormats(videoFormats: VideoFormat[]) {
@@ -24,7 +24,13 @@ function createButtons(topFormats: VideoFormat[], videoUrl: string) {
   return buttons;
 }
 
-function MainButtonsDiv({ formats, videoUrl }) {
+function MainButtonsDiv({
+  formats,
+  videoUrl,
+}: {
+  formats: VideoFormat[];
+  videoUrl: string;
+}) {
   const topFormats = prepareFormats(formats);
   const buttons = createButtons(topFormats, videoUrl);
 

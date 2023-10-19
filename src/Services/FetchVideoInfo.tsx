@@ -40,6 +40,7 @@ async function FetchVideoInfo(inputEl: string): Promise<CardModel> {
       obj.videoUrl = inputEl;
       return obj;
     }
+    return createFailedObj();
   } catch (error) {
     console.log("Whoops, somethings is broken. " + error);
     return createFailedObj();
