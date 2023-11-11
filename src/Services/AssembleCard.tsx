@@ -4,9 +4,9 @@ import VideoThumbnail from "../Components/Card/VideoThumbnail";
 import VideoTitle from "../Components/Card/VideoTitle";
 import { CardModel } from "../Contexts/CardContext";
 
-export default function assembleCard(card: CardModel) {
+export default function assembleCard(card: CardModel, isHistory: boolean) {
   return (
-    <Card key={card.videoUrl}>
+    <Card isHistory={isHistory} key={card.videoUrl}>
       <>
         <VideoThumbnail thumbnailUrl={card.thumbnail} />
         <div className="flex flex-col justify-between leading-normal gap-2 p-4 w-1/2">

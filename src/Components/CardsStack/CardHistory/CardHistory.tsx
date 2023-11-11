@@ -1,18 +1,18 @@
 import { ReactElement } from "react";
-import { CardModel, UseCardContext } from "../../../Contexts/CardContext";
+import { UseCardContext } from "../../../Contexts/CardContext";
 import assembleCard from "../../../Services/AssembleCard";
 
 function CardHistory() {
   const { cards } = UseCardContext();
-
-  let cardHistory: CardModel[] = [];
-  if (cards.length > 1) cardHistory = cards.slice(0, -1);
+  if (cards.length < 2) return;
 
   const cardsComponent: ReactElement[] = [];
 
-  cardHistory.forEach((card) => cardsComponent.push(assembleCard(card)));
+  cards
+    .slice(0, -1)
+    .forEach((card) => cardsComponent.push(assembleCard(card, true)));
 
-  return <div className={`stack`}>{cardsComponent}</div>;
+  return <div className={`stack`}>{cardsComponent.reverse()}</div>;
 }
 
 export default CardHistory;

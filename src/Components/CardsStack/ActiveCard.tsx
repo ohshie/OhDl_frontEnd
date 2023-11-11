@@ -11,11 +11,11 @@ export default function ActiveCard() {
   if (!lastCard) return;
 
   const currentCard = lastCard.isLoading ? (
-    <Card _zIndex="z-10">
+    <Card isHistory={false}>
       <Placeholder />
     </Card>
   ) : (
-    assembleCard(lastCard)
+    assembleCard(lastCard, false)
   );
 
   return (
