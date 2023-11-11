@@ -1,17 +1,18 @@
-import { motion } from "framer-motion";
-import {} from "react";
-import { UseCardContext } from "../../../Contexts/CardContext";
+import { ReactElement } from "react";
+import { CardModel, UseCardContext } from "../../../Contexts/CardContext";
+import assembleCard from "../../../Services/AssembleCard";
 
 function CardHistory() {
-  const { cardHistory } = UseCardContext();
+  const { cards } = UseCardContext();
 
-  return (
-    <motion.div className={`flex flex-col w-full items-center -space-y-48`}>
-      {cardHistory.map((card) => (
-        <>{card}</>
-      ))}
-    </motion.div>
-  );
+  let cardHistory: CardModel[] = [];
+  if (cards.length > 1) cardHistory = cards.slice(0, -1);
+
+  const cardsComponent: ReactElement[] = [];
+
+  cardHistory.forEach((card) => cardsComponent.push(assembleCard(card)));
+
+  return <div className={`stack`}>{cardsComponent}</div>;
 }
 
 export default CardHistory;

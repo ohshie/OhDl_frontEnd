@@ -14,7 +14,7 @@ function createButtons(topFormats: VideoFormat[], videoUrl: string) {
   topFormats.forEach((f) => {
     const button = (
       <FormatButton
-        key={f.formatCode + videoUrl}
+        key={f.formatCode + " " + videoUrl}
         format={f}
         videoUrl={videoUrl}
       />

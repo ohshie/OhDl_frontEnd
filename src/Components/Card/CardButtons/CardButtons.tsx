@@ -1,19 +1,18 @@
 import MainButtonsDiv from "./MainButtonsDiv";
 import ExtraButtons from "./Extrabutton";
-import { UseCardContext } from "../../../Contexts/CardContext";
+import { VideoFormat } from "../../../Contexts/CardContext";
 
-function CardButtons() {
-  const { cards } = UseCardContext();
-  const card = cards[cards.length - 1];
-  if (!card) return <>"shit is broken af"</>;
-
+function CardButtons({
+  content,
+  videoUrl,
+}: {
+  content: VideoFormat[];
+  videoUrl: string;
+}) {
   return (
     <>
-      <MainButtonsDiv
-        formats={card.formats}
-        videoUrl={card.videoUrl}
-      ></MainButtonsDiv>
-      <ExtraButtons videoUrl={card.videoUrl}></ExtraButtons>
+      <MainButtonsDiv formats={content} videoUrl={videoUrl} />
+      <ExtraButtons videoUrl={videoUrl} />
     </>
   );
 }

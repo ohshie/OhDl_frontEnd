@@ -5,7 +5,8 @@ import CardContext from "./Contexts/CardContext";
 import TitleAndForm from "./Components/TitleAndForm";
 
 import { GetCookie } from "./Services/Helpers";
-import CardStack from "./Components/CardsStack/CardStack";
+import ActiveCard from "./Components/CardsStack/ActiveCard";
+import CardHistory from "./Components/CardsStack/CardHistory/CardHistory";
 
 function App() {
   useEffect(() => {
@@ -19,7 +20,8 @@ function App() {
     <>
       <CardContext>
         <TitleAndForm />
-        <CardStack />
+        <ActiveCard />
+        <CardHistory />
       </CardContext>
     </>
   );

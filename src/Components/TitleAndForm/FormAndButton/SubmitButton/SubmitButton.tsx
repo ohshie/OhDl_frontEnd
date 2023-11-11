@@ -1,6 +1,6 @@
 import { CardModel, UseCardContext } from "../../../../Contexts/CardContext";
 import { useFormContext } from "../../../../Contexts/FormContext";
-import FetchVideoInfo from "../../../../Services/FetchVideoInfo";
+import handleSubmit from "../../../../Services/HandleSubmit";
 
 function safetyCheck(providedUrl: string, cards: CardModel[]): boolean {
   if (providedUrl === "") return false;
@@ -25,31 +25,7 @@ const SubmitButton = () => {
   const onClick = async () => {
     if (!safetyCheck(providedUrl, cards)) return;
 
-    let newCard: CardModel = {
-      isLoading: true,
-      videoUrl: providedUrl,
-      videoName: "",
-      videoDesc: "",
-      thumbnail: "",
-      formats: [],
-    };
-
-    setCards((prevCards) => [...prevCards, newCard]);
-
-    newCard = await FetchVideoInfo(providedUrl);
-    newCard.isLoading = false;
-
-    if (newCard.thumbnail === "failed") {
-      setCards((prevCards) =>
-        prevCards.filter((card) => card.videoUrl !== providedUrl)
-      );
-    } else {
-      setCards((prevCards) => {
-        return prevCards.map((card) =>
-          card.videoUrl === providedUrl ? newCard : card
-        );
-      });
-    }
+    await handleSubmit(providedUrl, setCards);
   };
 
   return (
