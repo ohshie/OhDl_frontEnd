@@ -3,7 +3,6 @@ import { GetCookie } from "./Helpers";
 
 function createFailedObj() {
   const obj: CardModel = {
-    isLoading: true,
     videoUrl: "",
     videoName: "",
     videoDesc: "",

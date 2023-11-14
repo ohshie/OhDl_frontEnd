@@ -14,13 +14,13 @@ export interface VideoFormat {
   width: number;
   height: number;
   frameRate: number;
+  timeToDl: number;
   oneFile: boolean;
   bigFile: boolean;
   webmOnly: boolean;
 }
 
 export interface CardModel {
-  isLoading: boolean;
   videoUrl: string;
   videoName: string;
   videoDesc: string;
@@ -34,6 +34,12 @@ type CardContext = {
   addToCardHistory: (card: ReactElement) => void;
   cardHistory: ReactElement[];
   setCardHistory: Dispatch<SetStateAction<ReactElement[]>>;
+  timeToDl: number;
+  setTimeToDl: Dispatch<SetStateAction<number>>;
+  isLoading: boolean;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  isDownloading: boolean;
+  setIsDownloading: Dispatch<SetStateAction<boolean>>;
 };
 
 type CardContextProvider = { children: ReactNode };
@@ -43,6 +49,9 @@ export const CardContext = createContext<CardContext | null>(null);
 export default function CardContextProvider({ children }: CardContextProvider) {
   const [cards, setCards] = useState<CardModel[]>([]);
   const [cardHistory, setCardHistory] = useState<ReactElement[]>([]);
+  const [timeToDl, setTimeToDl] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isDownloading, setIsDownloading] = useState<boolean>(false);
 
   function addToCardHistory(card: ReactElement) {
     setCardHistory((prev) => [card, ...prev]);
@@ -56,6 +65,12 @@ export default function CardContextProvider({ children }: CardContextProvider) {
         cardHistory,
         setCardHistory,
         addToCardHistory,
+        timeToDl,
+        setTimeToDl,
+        isLoading,
+        isDownloading,
+        setIsLoading,
+        setIsDownloading,
       }}
     >
       {children}

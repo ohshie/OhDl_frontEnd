@@ -20,12 +20,12 @@ function safetyCheck(providedUrl: string, cards: CardModel[]): boolean {
 
 const SubmitButton = () => {
   const { providedUrl } = useFormContext();
-  const { cards, setCards } = UseCardContext();
+  const { cards, setCards, setIsLoading } = UseCardContext();
 
   const onClick = async () => {
     if (!safetyCheck(providedUrl, cards)) return;
 
-    await handleSubmit(providedUrl, setCards);
+    await handleSubmit(providedUrl, setCards, setIsLoading);
   };
 
   return (

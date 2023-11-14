@@ -3,10 +3,10 @@ import FetchVideoInfo from "./FetchVideoInfo";
 
 export default async function handleSubmit(
   providedUrl: string,
-  setCards: React.Dispatch<React.SetStateAction<CardModel[]>>
+  setCards: React.Dispatch<React.SetStateAction<CardModel[]>>,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   let newCard: CardModel = {
-    isLoading: true,
     videoUrl: providedUrl,
     videoName: "",
     videoDesc: "",
@@ -16,8 +16,9 @@ export default async function handleSubmit(
 
   setCards((prevCards) => [...prevCards, newCard]);
 
+  setIsLoading(true);
+
   newCard = await FetchVideoInfo(providedUrl);
-  newCard.isLoading = false;
 
   if (newCard.thumbnail === "failed") {
     setCards((prevCards) =>
@@ -30,4 +31,5 @@ export default async function handleSubmit(
       );
     });
   }
+  setIsLoading(false);
 }

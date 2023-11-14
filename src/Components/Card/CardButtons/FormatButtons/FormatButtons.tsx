@@ -1,4 +1,4 @@
-import { VideoFormat } from "../../../../Contexts/CardContext";
+import { UseCardContext, VideoFormat } from "../../../../Contexts/CardContext";
 import ServeMedia from "../../../../Services/ServeMedia";
 
 type FormatButtonProps = {
@@ -7,8 +7,18 @@ type FormatButtonProps = {
 };
 
 function FormatButton({ format, videoUrl }: FormatButtonProps) {
+  const { cards, setTimeToDl, setIsDownloading } = UseCardContext();
+
   async function onClick() {
+    const lastCard = cards[cards.length - 1];
+    if (!lastCard) return;
+
+    setIsDownloading(true);
+    setTimeToDl(format.timeToDl);
+
     await ServeMedia(videoUrl, format.formatCode);
+
+    setIsDownloading(false);
   }
 
   let color: string;
